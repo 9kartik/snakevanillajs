@@ -21,7 +21,7 @@ export const drawRect = (canvasContext, x, y, size) => {
 export const drawArc = (canvasContext, x, y, size) => { 
                                 drawBetween(canvasContext, () => {
                                     canvasContext.translate(0.5, 0.5);
-                                    canvasContext.arc(x, y, size/2, 0, 2 * Math.PI);
+                                    canvasContext.arc(x + size/2, y + size/2, size/2, 0, 2 * Math.PI);
                                     canvasContext.fillStyle = "maroon";
                                     canvasContext.translate(-0.5, -0.5);
                                 })
