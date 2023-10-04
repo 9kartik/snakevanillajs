@@ -32,6 +32,12 @@ export function orchestrator (w, h, size, canvasContext, mode) {
         alert("Your score is " + score);
       }
     }
+
+    if (theSnake.getAllPointsOfSnake().length === numColumns * numRows - 1) {
+      clearInterval(intervalHash);
+      alert("You filled the whole board, there's no possible way to score more than " + score);
+    }
+
     if (theSnake.detectSelfCollision()) {
       clearInterval(intervalHash);
       alert("Your score is " + score);
