@@ -6,7 +6,7 @@ export function cherry(size){
     return {
         respawn: (w, h, restrictedPoints = []) => {
             cx = lowestMultipleOf(getRandomInt(w), size); cy = lowestMultipleOf(getRandomInt(h), size)
-            if(restrictedPoints.some(({pointx, pointy}) => cx -size/2 === pointx && cy - size/2 === pointy)){
+            if(restrictedPoints.some(({pointx, pointy}) => cx === pointx && cy === pointy)){
                 console.log('hit')
                 this.respawn(w, h, restrictedPoints)
             }
