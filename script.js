@@ -2,13 +2,18 @@ const drawRect = (ctx, x, y, size) => {
                                 ctx.beginPath();
                                 ctx.rect(x, y, size, size);
                                 ctx.fill(); }
+
 const drawArc = (ctx, x, y, size) => { 
                                 ctx.beginPath();
-                                ctx.arc(x, y, size/2, 0, 2 * Math.PI);
+                                ctx.arc(x + size/2, y + size/2, size/2, 0, 2 * Math.PI);
                                 ctx.fillStyle = "maroon";
                                 ctx.fill();
                                 ctx.fillStyle = "black";
                              }
+
+function lowestMultipleOf(num, size){
+    return num - num%size;
+}
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -18,7 +23,7 @@ function cherry(size){
     let cx = 0, cy = 0;
     return {
         respawn: (w, h, restrictedPoints = []) => {
-            cx = getRandomInt(w); cy = getRandomInt(h)
+            cx = lowestMultipleOf(getRandomInt(w), size); cy = lowestMultipleOf(getRandomInt(h), size)
             if(restrictedPoints.some(({pointx, pointy}) => cx === pointx && cy === pointy)){
                 console.log('hit')
                 this.respawn(w, h, restrictedPoints)
@@ -91,11 +96,11 @@ function orchestrator(w, h, size, ctx, mode) {
     const fruit = cherry(size);
     let ct = null;
     let score = 1;
-    snak.initiate(numColumns/2 * size, numRows/2 * size);
+    snak.initiate(lowestMultipleOf(numColumns/2, size), lowestMultipleOf(numRows/2, size));
     ctx.clearRect(0, 0, w, h);
-    // window.requestAnimationFrame(() =>true);
 
     fruit.respawn(w, h);
+
     document.addEventListener('keydown', (e) => {
         if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))
             snak.setDirection(e.code);
@@ -103,7 +108,6 @@ function orchestrator(w, h, size, ctx, mode) {
 
     ct = setInterval(() => {
         ctx.clearRect(0, 0, w, h);
-        // window.requestAnimationFrame(() => true);
         snak.setNewPosition();
         snak.draw(ctx);
         fruit.draw(ctx);
